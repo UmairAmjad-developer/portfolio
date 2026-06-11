@@ -259,6 +259,19 @@ img{max-width:100%;display:block}
 .foot .about p{font-size:.92rem;color:var(--mist);max-width:280px;margin:16px 0 20px}
 .foot .about .socials a{width:38px;height:38px;border-radius:10px}
 .foot-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:26px;border-top:1px solid var(--line);font-size:.85rem;color:var(--mist-dim)}
+/* ---- tool tile tooltip ---- */
+.stack-grid .tile{position:relative}
+.tile-tip{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(6px);background:rgba(14,12,30,.96);border:1px solid var(--violet);border-radius:10px;padding:10px 14px;min-width:140px;max-width:200px;pointer-events:none;opacity:0;transition:opacity .18s ease,transform .18s ease;z-index:200;text-align:center;backdrop-filter:blur(10px)}
+.tile-tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--violet)}
+.tile-tip .tn{font-family:"Space Grotesk";font-weight:600;font-size:.88rem;color:#fff;margin-bottom:3px}
+.tile-tip .td{font-family:"JetBrains Mono";font-size:.7rem;color:var(--mist);letter-spacing:.04em;line-height:1.4}
+.stack-grid .tile:hover .tile-tip{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:600px){.tile-tip{display:none}}
+
+/* ---- timeline left/right slide animations ---- */
+.gsap-on .tnode-left{opacity:0;transform:translateX(-60px)}
+.gsap-on .tnode-right{opacity:0;transform:translateX(60px)}
+.tnode-left,.tnode-right{transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
 .gsap-on .reveal{opacity:0;transform:translateY(30px)}
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
@@ -333,19 +346,19 @@ img{max-width:100%;display:block}
     <p class="muted">The technologies I use to design, build and ship.</p>
   </div>
   <div class="stack-grid reveal">
-    <div class="tile"><img loading="lazy" alt="Python" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"/></div>
-    <div class="tile"><img loading="lazy" alt="C" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg"/></div>
-    <div class="tile"><img loading="lazy" alt="C++" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg"/></div>
-    <div class="tile"><img loading="lazy" alt="Java" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"/></div>
-    <div class="tile"><img loading="lazy" alt="JavaScript" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"/></div>
-    <div class="tile"><img loading="lazy" alt="HTML5" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg"/></div>
-    <div class="tile"><img loading="lazy" alt="CSS3" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg"/></div>
-    <div class="tile"><img loading="lazy" alt="React" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg"/></div>
-    <div class="tile"><img loading="lazy" alt="Node.js" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg"/></div>
-    <div class="tile"><img loading="lazy" alt="SQL Server" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/microsoftsqlserver/microsoftsqlserver-plain.svg"/></div>
-    <div class="tile"><img loading="lazy" alt="Git" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg"/></div>
-    <div class="tile"><img loading="lazy" alt="VS Code" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg"/></div>
-    <div class="tile" title="AI Automation"><svg viewBox="0 0 48 48" role="img" aria-label="AI Automation" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="airb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="0.5" stop-color="#8b5cf6"/><stop offset="1" stop-color="#e056fd"/></linearGradient></defs><g fill="none" stroke="url(#airb)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="24" y1="6" x2="24" y2="12"/><rect x="9" y="12" width="30" height="24" rx="7"/><line x1="6" y1="21" x2="6" y2="28"/><line x1="42" y1="21" x2="42" y2="28"/><path d="M18 31 Q24 35 30 31"/></g><circle cx="24" cy="5.4" r="2.2" fill="#22d3ee"/><circle cx="17.5" cy="23" r="2.8" fill="#22d3ee"/><circle cx="30.5" cy="23" r="2.8" fill="#e056fd"/></svg></div>
+    <div class="tile"><img loading="lazy" alt="Python" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"/><div class="tile-tip"><div class="tn">Python</div><div class="td">AI · ML · scripting · data analysis</div></div></div>
+    <div class="tile"><img loading="lazy" alt="C" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg"/><div class="tile-tip"><div class="tn">C</div><div class="td">low-level systems programming</div></div></div>
+    <div class="tile"><img loading="lazy" alt="C++" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg"/><div class="tile-tip"><div class="tn">C++</div><div class="td">games · SFML · OOP projects</div></div></div>
+    <div class="tile"><img loading="lazy" alt="Java" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"/><div class="tile-tip"><div class="tn">Java</div><div class="td">OOP · backend · coursework</div></div></div>
+    <div class="tile"><img loading="lazy" alt="JavaScript" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"/><div class="tile-tip"><div class="tn">JavaScript</div><div class="td">web interactivity · Node · React</div></div></div>
+    <div class="tile"><img loading="lazy" alt="HTML5" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg"/><div class="tile-tip"><div class="tn">HTML5</div><div class="td">semantic markup · web structure</div></div></div>
+    <div class="tile"><img loading="lazy" alt="CSS3" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg"/><div class="tile-tip"><div class="tn">CSS3</div><div class="td">animations · layouts · responsive UI</div></div></div>
+    <div class="tile"><img loading="lazy" alt="React" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg"/><div class="tile-tip"><div class="tn">React</div><div class="td">component UIs · SPAs · hooks</div></div></div>
+    <div class="tile"><img loading="lazy" alt="Node.js" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg"/><div class="tile-tip"><div class="tn">Node.js</div><div class="td">REST APIs · server-side JS</div></div></div>
+    <div class="tile"><img loading="lazy" alt="SQL Server" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/microsoftsqlserver/microsoftsqlserver-plain.svg"/><div class="tile-tip"><div class="tn">SQL Server</div><div class="td">relational DBs · queries · schemas</div></div></div>
+    <div class="tile"><img loading="lazy" alt="Git" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg"/><div class="tile-tip"><div class="tn">Git</div><div class="td">version control · GitHub · branching</div></div></div>
+    <div class="tile"><img loading="lazy" alt="VS Code" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg"/><div class="tile-tip"><div class="tn">VS Code</div><div class="td">primary IDE · extensions · debugging</div></div></div>
+    <div class="tile" title="AI Automation"><svg viewBox="0 0 48 48" role="img" aria-label="AI Automation" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="airb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="0.5" stop-color="#8b5cf6"/><stop offset="1" stop-color="#e056fd"/></linearGradient></defs><g fill="none" stroke="url(#airb)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="24" y1="6" x2="24" y2="12"/><rect x="9" y="12" width="30" height="24" rx="7"/><line x1="6" y1="21" x2="6" y2="28"/><line x1="42" y1="21" x2="42" y2="28"/><path d="M18 31 Q24 35 30 31"/></g><circle cx="24" cy="5.4" r="2.2" fill="#22d3ee"/><circle cx="17.5" cy="23" r="2.8" fill="#22d3ee"/><circle cx="30.5" cy="23" r="2.8" fill="#e056fd"/></svg><div class="tile-tip"><div class="tn">AI Automation</div><div class="td">LLMs · prompt engineering · workflows</div></div></div>
   </div>
 </section>
 
@@ -411,24 +424,9 @@ img{max-width:100%;display:block}
   </div>
 </section>
 
-<section class="section wrap" id="experience" style="padding-top:0">
-  <div class="head reveal" style="margin-inline:auto;text-align:center">
-    <span class="eyebrow" style="justify-content:center">// 03 — the journey</span>
-    <h2>Experience</h2>
-    <p class="muted">From financial risk to HR support and frontend development — a path built on adaptability.</p>
-  </div>
-  <div class="timeline">
-    <div class="tnode reveal"><span class="when">2026 — Present</span><h4>Freelancer — Data &amp; Documentation</h4><p class="org">Upwork (Active)</p><p>Delivering data analysis, documentation and admin support to clients while maintaining a consistent project-completion record.</p></div>
-    <div class="tnode reveal"><span class="when">2024 — 2025</span><h4>Risk Manager</h4><p class="org">CapitalFX, Lahore</p><p>Monitored and assessed financial-risk exposure across trading accounts and prepared data-driven risk reports for management review.</p></div>
-    <div class="tnode reveal"><span class="when">2024 — 2025</span><h4>Junior Frontend Developer — Internship</h4><p class="org">SOFTEC, FAST-NUCES Lahore</p><p>Built responsive interfaces with HTML, CSS and JavaScript that boosted user engagement by 35%.</p></div>
-    <div class="tnode reveal"><span class="when">4 months</span><h4>Assistant HR</h4><p class="org">CollabBPO, Lahore</p><p>Assisted the HR team with recruitment coordination, candidate documentation and day-to-day administrative operations.</p></div>
-    <div class="tnode reveal"><span class="when">2023 — Present</span><h4>Subject Teacher — Maths, Physics &amp; Chemistry</h4><p class="org">Private</p><p>3.5 years of student-centered, adaptive teaching — sharpening communication and presentation skills.</p></div>
-  </div>
-</section>
-
 <section class="section wrap" id="education" style="padding-top:0">
   <div class="head reveal" style="margin-inline:auto;text-align:center">
-    <span class="eyebrow" style="justify-content:center">// 04 — education</span>
+    <span class="eyebrow" style="justify-content:center">// 03 — education</span>
     <h2>Education</h2>
     <p class="muted">My academic path — from school to a Computer Science degree at FAST-NUCES.</p>
   </div>
@@ -469,6 +467,21 @@ img{max-width:100%;display:block}
       <div class="edu-prog"><div class="bar" data-w="100"></div></div>
       <div class="edu-foot"><span>Secondary School</span><span>Completed</span></div>
     </div>
+  </div>
+</section>
+
+<section class="section wrap" id="experience" style="padding-top:0">
+  <div class="head reveal" style="margin-inline:auto;text-align:center">
+    <span class="eyebrow" style="justify-content:center">// 04 — the journey</span>
+    <h2>Experience</h2>
+    <p class="muted">From financial risk to HR support and frontend development — a path built on adaptability.</p>
+  </div>
+  <div class="timeline">
+    <div class="tnode reveal tnode-left"><span class="when">2026 — Present</span><h4>Freelancer — Data &amp; Documentation</h4><p class="org">Upwork (Active)</p><p>Delivering data analysis, documentation and admin support to clients while maintaining a consistent project-completion record.</p></div>
+    <div class="tnode reveal tnode-right"><span class="when">2024 — 2025</span><h4>Risk Manager</h4><p class="org">CapitalFX, Lahore</p><p>Monitored and assessed financial-risk exposure across trading accounts and prepared data-driven risk reports for management review.</p></div>
+    <div class="tnode reveal tnode-left"><span class="when">2024 — 2025</span><h4>Junior Frontend Developer — Internship</h4><p class="org">SOFTEC, FAST-NUCES Lahore</p><p>Built responsive interfaces with HTML, CSS and JavaScript that boosted user engagement by 35%.</p></div>
+    <div class="tnode reveal tnode-right"><span class="when">4 months</span><h4>Assistant HR</h4><p class="org">CollabBPO, Lahore</p><p>Assisted the HR team with recruitment coordination, candidate documentation and day-to-day administrative operations.</p></div>
+    <div class="tnode reveal tnode-left"><span class="when">2023 — Present</span><h4>Subject Teacher — Maths, Physics &amp; Chemistry</h4><p class="org">Private</p><p>3.5 years of student-centered, adaptive teaching — sharpening communication and presentation skills.</p></div>
   </div>
 </section>
 
@@ -610,7 +623,13 @@ img{max-width:100%;display:block}
         }
       });
     }, {threshold:.12, rootMargin:"0px 0px -60px 0px"});
-    els.forEach(function(el,idx){ el.style.transitionDelay = (idx % 4 * 0.06) + "s"; io.observe(el); });
+    els.forEach(function(el,idx){
+      // directional timeline nodes get their own stagger via transitionDelay only
+      if(!el.classList.contains("tnode-left") && !el.classList.contains("tnode-right")){
+        el.style.transitionDelay = (idx % 4 * 0.06) + "s";
+      }
+      io.observe(el);
+    });
   }
   function setupCounters(){
     var nums = document.querySelectorAll("[data-count]");
@@ -764,8 +783,9 @@ img{max-width:100%;display:block}
     soundBtn=document.getElementById("soundToggle");
     if(!soundBtn) return;
     soundBtn.addEventListener("click", function(){ if(soundOn) stopSound(); else startSound(); });
-    setBtnState(true);   // armed "on" by default
-    startSound();        // attempt autoplay; if blocked, starts on first interaction
+    // arm on load — will play on first interaction
+    setBtnState(true);
+    startSound();
   }
   function setBtnState(on){
     soundOn=on;
@@ -789,26 +809,36 @@ img{max-width:100%;display:block}
       return true;
     }catch(e){ return false; }
   }
-  function startSound(){
-    setBtnState(true);
-    if(!ensureCtx()) return;
-    if(audioCtx.state==="suspended"){ try{ audioCtx.resume(); }catch(e){} }
-    doPlay();
-  }
-  function doPlay(){
+  function ensureMedia(){
+    /* createMediaElementSource must only be called once per element */
+    if(mediaConnected) return true;
     if(!audioEl){
       audioEl=new Audio(AUDIO_SRC);
       audioEl.loop=true; audioEl.preload="auto";
-      audioEl.addEventListener("error", function(){ if(soundOn && !usingPiano && audioCtx && audioCtx.state==="running") startPiano(); });
+      audioEl.addEventListener("error", function(){
+        if(soundOn && !usingPiano && audioCtx && audioCtx.state==="running") startPiano();
+      });
     }
-    if(!mediaConnected){
-      try{
-        var msrc=audioCtx.createMediaElementSource(audioEl);
-        mediaGain=audioCtx.createGain(); mediaGain.gain.value=0.0;
-        msrc.connect(mediaGain); mediaGain.connect(analyser);
-        mediaConnected=true;
-      }catch(e){ /* tainted / local file: still plays, visualizer idles */ }
+    try{
+      var msrc=audioCtx.createMediaElementSource(audioEl);
+      mediaGain=audioCtx.createGain(); mediaGain.gain.value=0.0;
+      msrc.connect(mediaGain); mediaGain.connect(analyser);
+      mediaConnected=true;
+      return true;
+    }catch(e){ return false; }
+  }
+  function startSound(){
+    setBtnState(true);
+    if(!ensureCtx()) return;
+    if(audioCtx.state==="suspended"){
+      audioCtx.resume().then(doPlay, doPlay);
+    } else {
+      doPlay();
     }
+  }
+  function doPlay(){
+    if(!soundOn) return;
+    if(!ensureMedia()) return;
     var pr=audioEl.play();
     if(pr && pr.then){
       pr.then(function(){ usingPiano=false; fadeMediaIn(); disarmGesture(); })
@@ -828,8 +858,7 @@ img{max-width:100%;display:block}
       disarmGesture();
       if(!soundOn) return;
       if(audioCtx && audioCtx.state==="suspended"){
-        var p=audioCtx.resume();
-        if(p && p.then){ p.then(doPlay, doPlay); } else { doPlay(); }
+        audioCtx.resume().then(doPlay, doPlay);
       } else { doPlay(); }
     };
     for(var i=0;i<gestureEvents.length;i++){ window.addEventListener(gestureEvents[i], gestureHandler, {passive:true}); }
@@ -879,12 +908,14 @@ img{max-width:100%;display:block}
     if(schedTimer){ clearTimeout(schedTimer); schedTimer=null; }
     if(!audioCtx) return;
     var t=audioCtx.currentTime;
+    /* fade out MP3 */
     if(mediaGain){
       mediaGain.gain.cancelScheduledValues(t);
       mediaGain.gain.setValueAtTime(mediaGain.gain.value, t);
       mediaGain.gain.linearRampToValueAtTime(0.0001, t+0.8);
       setTimeout(function(){ if(!soundOn && audioEl){ try{ audioEl.pause(); }catch(e){} } }, 850);
     } else if(audioEl){ try{ audioEl.pause(); }catch(e){} }
+    /* fade out piano master */
     if(master){
       master.gain.cancelScheduledValues(t);
       master.gain.setValueAtTime(master.gain.value, t);
