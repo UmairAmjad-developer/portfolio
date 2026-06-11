@@ -272,16 +272,78 @@ img{max-width:100%;display:block}
 .gsap-on .tnode-left{opacity:0;transform:translateX(-60px)}
 .gsap-on .tnode-right{opacity:0;transform:translateX(60px)}
 .tnode-left,.tnode-right{transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+/* ---- card scroll reveal: clip-wipe + blur, reversible on scroll ---- */
+.anim{transition:opacity .7s ease, filter .7s ease, clip-path .85s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1);transform-style:preserve-3d;will-change:transform,opacity,filter}
+.gsap-on .anim{opacity:0;filter:blur(11px);clip-path:inset(0 0 100% 0 round 18px)}
+.gsap-on .anim.in{opacity:1;filter:blur(0);clip-path:inset(0 0 0 0 round 18px)}
+/* ---- card hover: pointer 3D tilt + cursor spotlight ---- */
+.card,.proj,.edu-card{transform-style:preserve-3d}
+.card::after,.proj::after,.edu-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;opacity:0;transition:opacity .35s ease;background:radial-gradient(circle 220px at var(--mx,50%) var(--my,50%),rgba(190,205,255,.16),transparent 60%)}
+.card:hover::after,.proj:hover::after,.edu-card:hover::after{opacity:1}
+.card>*,.proj>*,.edu-card>*{position:relative;z-index:2}
+/* ---- enter gate (click-to-enter splash; unlocks audio) ---- */
+html.gate-open,html.gate-open body{overflow:hidden}
+.enter-gate{position:fixed;inset:0;z-index:3000;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;background:radial-gradient(ellipse 90% 70% at 50% 32%,#130f30,#05050f 72%);transition:opacity .7s ease,transform .75s cubic-bezier(.22,1,.36,1),filter .7s ease}
+html.js .enter-gate{display:flex}
+.enter-gate.gate-closing{opacity:0;transform:scale(1.07);filter:blur(12px);pointer-events:none}
+.enter-gate .eg-grid{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:54px 54px;mask-image:radial-gradient(ellipse 65% 60% at 50% 42%,#000,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 65% 60% at 50% 42%,#000,transparent 75%);opacity:.45}
+.eg-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
+.eg-core{position:relative;width:154px;height:154px;display:grid;place-items:center;margin-bottom:30px}
+.eg-core .egr{position:absolute;border-radius:50%;border:1px solid var(--line)}
+.eg-core .egr.r1{inset:0;border:none;background:conic-gradient(from 0deg,var(--cyan),var(--violet),var(--magenta),#ff7bd5,var(--cyan));-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.5px));mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.5px));animation:spin 9s linear infinite;box-shadow:0 0 40px rgba(139,92,246,.5)}
+.eg-core .egr.r2{inset:20px;animation:egPulse 2.6s ease-in-out infinite}
+.eg-core .egr.r3{inset:38px;opacity:.55;animation:egPulse 2.6s ease-in-out infinite .7s}
+.eg-core .eglogo{width:76px;height:76px;filter:drop-shadow(0 0 16px rgba(139,92,246,.75));animation:egFloat 4.2s ease-in-out infinite}
+@keyframes egPulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.07);opacity:.95}}
+@keyframes egFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.eg-name{font-family:"Space Grotesk";font-weight:700;font-size:clamp(1.6rem,4.6vw,2.5rem);margin-bottom:9px}
+.eg-sub{font-family:"JetBrains Mono";font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--violet-bright);margin-bottom:38px}
+.eg-btn{position:relative;font-family:"Space Grotesk";font-weight:600;font-size:1.06rem;color:#fff;border:none;cursor:pointer;background:var(--grad);padding:16px 42px;border-radius:999px;display:inline-flex;align-items:center;gap:12px;box-shadow:0 10px 38px rgba(167,93,246,.5);transition:transform .25s ease,box-shadow .3s ease}
+.eg-btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 16px 50px rgba(224,86,253,.65)}
+.eg-btn svg{width:20px;height:20px}
+.eg-btn .egp{position:absolute;inset:-6px;border-radius:999px;border:1px solid var(--violet);opacity:.55;animation:egExpand 2.4s ease-out infinite;pointer-events:none}
+@keyframes egExpand{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.55);opacity:0}}
+.eg-quiet{margin-top:24px;background:none;border:none;color:var(--mist);font-family:"JetBrains Mono";font-size:12px;letter-spacing:.05em;cursor:pointer;border-bottom:1px solid transparent;transition:color .2s,border-color .2s;padding:2px 0}
+.eg-quiet:hover{color:#fff;border-color:var(--violet)}
+.eg-hint{margin-top:30px;font-family:"JetBrains Mono";font-size:11px;letter-spacing:.1em;color:var(--mist-dim);display:inline-flex;align-items:center;gap:7px}
+.eg-hint svg{width:13px;height:13px;color:var(--cyan)}
+@media(max-width:600px){.eg-core{width:128px;height:128px;margin-bottom:24px}.eg-core .eglogo{width:62px;height:62px}.eg-btn{padding:14px 34px;font-size:1rem}}
 .gsap-on .reveal{opacity:0;transform:translateY(30px)}
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
   .gsap-on .reveal{opacity:1;transform:none}
+  .gsap-on .anim{opacity:1;filter:none;clip-path:none}
   .edu-prog .bar{transition:none}
+  .enter-gate{transition:none}
 }
 :focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
 </style>
+<script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
+
+<div class="enter-gate" id="enterGate" role="dialog" aria-label="Enter site">
+  <div class="eg-grid" aria-hidden="true"></div>
+  <div class="eg-inner">
+    <div class="eg-core" aria-hidden="true">
+      <span class="egr r1"></span><span class="egr r2"></span><span class="egr r3"></span>
+      <svg class="eglogo" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="hgGate" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="0.55" stop-color="#e056fd"/><stop offset="1" stop-color="#ff7bd5"/></linearGradient></defs>
+        <path d="M24 5 C33 5 39 12 39 22 C39 27 37 31 34 35 C31 40 28 43 24 43 C20 43 17 40 14 35 C11 31 9 27 9 22 C9 12 15 5 24 5 Z" fill="url(#hgGate)"/>
+        <g fill="#0a0a16"><rect x="12.5" y="19" width="10" height="7" rx="3"/><rect x="25.5" y="19" width="10" height="7" rx="3"/><rect x="22" y="20.5" width="4" height="2" rx="1"/><path d="M18 32 Q24 37 30 32 Q24 34.5 18 32 Z"/></g>
+      </svg>
+    </div>
+    <h2 class="eg-name grad-text">Muhammad Umair Amjad</h2>
+    <p class="eg-sub">Computer Scientist &middot; Full-Stack &middot; AI</p>
+    <button class="eg-btn" id="gateEnter" aria-label="Enter portfolio">
+      <span class="egp"></span>
+      <span>Enter</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+    <button class="eg-quiet" id="gateQuiet">Enter without sound</button>
+    <div class="eg-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg> Best experienced with sound on</div>
+  </div>
+</div>
 
 <div class="bg" aria-hidden="true"><div class="grid"></div><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="vignette"></div></div>
 
@@ -300,14 +362,14 @@ img{max-width:100%;display:block}
     </svg>
   </a>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li><li><a href="#skills">Skills</a></li><li><a href="#projects">Projects</a></li><li><a href="#experience">Experience</a></li><li><a href="#education">Education</a></li><li><a href="#contact">Contact</a></li>
+    <li><a href="#about">About</a></li><li><a href="#education">Education</a></li><li><a href="#skills">Skills</a></li><li><a href="#projects">Projects</a></li><li><a href="#experience">Experience</a></li><li><a href="#contact">Contact</a></li>
   </ul>
   <a class="btn btn-primary" href="#contact">Hire me <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   <button class="menu-btn" id="menuBtn" aria-label="Open menu">&#9776;</button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <button class="close" id="closeMenu" aria-label="Close menu">&#10005;</button>
-  <a href="#about" data-mclose>About</a><a href="#skills" data-mclose>Skills</a><a href="#projects" data-mclose>Projects</a><a href="#experience" data-mclose>Experience</a><a href="#education" data-mclose>Education</a><a href="#contact" data-mclose>Contact</a>
+  <a href="#about" data-mclose>About</a><a href="#education" data-mclose>Education</a><a href="#skills" data-mclose>Skills</a><a href="#projects" data-mclose>Projects</a><a href="#experience" data-mclose>Experience</a><a href="#contact" data-mclose>Contact</a>
 </div>
 
 <header class="hero wrap" id="top">
@@ -339,9 +401,75 @@ img{max-width:100%;display:block}
   </div>
 </header>
 
-<section class="section wrap" id="skills">
+<section class="section wrap" id="about">
+  <div class="head reveal">
+    <span class="eyebrow">// 01 — what I do</span>
+    <h2>End-to-end skills,<br>from front-end to AI</h2>
+    <p class="muted">I'm a results-driven CS student who has shipped full-stack apps, trained ML models, and worked across freelancing, financial risk, and frontend internships. I learn fast and like to build things that actually solve problems.</p>
+  </div>
+  <div class="cards">
+    <div class="card anim" data-magnetic><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6L2 12l6 6M16 6l6 6-6 6"/></svg></div><h3>Full-Stack Development</h3><p>React front-ends, Node.js back-ends and SQL Server databases — complete, responsive web apps built end to end.</p></div>
+    <div class="card anim" data-magnetic><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3 3 3 0 0 0-3 3 3 3 0 0 0 0 6 3 3 0 0 0 3 3 3 3 0 0 0 6 0 3 3 0 0 0 3-3 3 3 0 0 0 0-6 3 3 0 0 0-3-3 3 3 0 0 0-3-3z"/><path d="M9 13h.01M15 13h.01"/></svg></div><h3>AI &amp; Machine Learning</h3><p>Training AI models in Python — from fraud detection to game-playing agents using Minimax and ML pipelines.</p></div>
+    <div class="card anim" data-magnetic><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>Cybersecurity</h3><p>Threat-intelligence systems and security thinking — recognised as SOFTEC's Best Security Officer.</p></div>
+    <div class="card anim" data-magnetic><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div><h3>Data Analysis</h3><p>Turning raw data into insight with NumPy, Pandas &amp; Matplotlib, plus reporting from real financial-risk work.</p></div>
+  </div>
+  <div class="stats reveal">
+    <div class="stat"><span class="num" data-count="8" data-suffix="+">0</span><span class="lbl">Projects Built</span></div>
+    <div class="stat"><span class="num" data-count="3.5" data-suffix=" yrs">0</span><span class="lbl">Teaching Experience</span></div>
+    <div class="stat"><span class="num" data-count="4" data-suffix="+">0</span><span class="lbl">Roles &amp; Internships</span></div>
+    <div class="stat"><span class="num" data-count="11" data-suffix="+">0</span><span class="lbl">Technologies</span></div>
+  </div>
+</section>
+
+<section class="section wrap" id="education" style="padding-top:0">
   <div class="head reveal" style="margin-inline:auto;text-align:center">
-    <span class="eyebrow" style="justify-content:center">// languages &amp; tools</span>
+    <span class="eyebrow" style="justify-content:center">// 02 — education</span>
+    <h2>Education</h2>
+    <p class="muted">My academic path — from school to a Computer Science degree at FAST-NUCES.</p>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card anim">
+      <div class="edu-top">
+        <div class="edu-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 9l9-4 9 4-9 4-9-4z"/><path d="M7 11.5V16c0 1 2.5 2.2 5 2.2s5-1.2 5-2.2v-4.5"/><path d="M21 9.2V14"/></svg></div>
+        <span class="edu-badge now">In Progress</span>
+      </div>
+      <h4>BS Computer Science</h4>
+      <p class="inst">FAST-NUCES, Lahore</p>
+      <p class="yr">2024 — 2028</p>
+      <div class="subj"><span>Full-Stack</span><span>AI / ML</span><span>Cybersecurity</span><span>DSA</span></div>
+      <div class="edu-prog"><div class="bar" data-w="48"></div></div>
+      <div class="edu-foot"><span>Bachelor's degree</span><span>~48%</span></div>
+    </div>
+    <div class="edu-card anim">
+      <div class="edu-top">
+        <div class="edu-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="9.5" ry="4"/><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(120 12 12)"/></svg></div>
+        <span class="edu-badge">Completed</span>
+      </div>
+      <h4>Intermediate — Pre-Engineering</h4>
+      <p class="inst">KIPS College</p>
+      <p class="yr">2022 — 2024</p>
+      <div class="subj"><span>Physics</span><span>Chemistry</span><span>Maths</span></div>
+      <div class="edu-prog"><div class="bar" data-w="100"></div></div>
+      <div class="edu-foot"><span>FSc · Pre-Engineering</span><span>Completed</span></div>
+    </div>
+    <div class="edu-card anim">
+      <div class="edu-top">
+        <div class="edu-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 4h11a2 2 0 0 1 2 2v13H7a2 2 0 0 0-2 2z"/><path d="M5 19a2 2 0 0 1 2-2h11"/></svg></div>
+        <span class="edu-badge">Completed</span>
+      </div>
+      <h4>Matriculation — Computer Science</h4>
+      <p class="inst">Matric (Science)</p>
+      <p class="yr">2020 — 2022</p>
+      <div class="subj"><span>Physics</span><span>Chemistry</span><span>Comp. Sci</span><span>Maths</span></div>
+      <div class="edu-prog"><div class="bar" data-w="100"></div></div>
+      <div class="edu-foot"><span>Secondary School</span><span>Completed</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="skills" style="padding-top:0">
+  <div class="head reveal" style="margin-inline:auto;text-align:center">
+    <span class="eyebrow" style="justify-content:center">// 03 — languages &amp; tools</span>
     <h2>Languages &amp; Tools</h2>
     <p class="muted">The technologies I use to design, build and ship.</p>
   </div>
@@ -362,33 +490,13 @@ img{max-width:100%;display:block}
   </div>
 </section>
 
-<section class="section wrap" id="about" style="padding-top:0">
-  <div class="head reveal">
-    <span class="eyebrow">// 01 — what I do</span>
-    <h2>End-to-end skills,<br>from front-end to AI</h2>
-    <p class="muted">I'm a results-driven CS student who has shipped full-stack apps, trained ML models, and worked across freelancing, financial risk, and frontend internships. I learn fast and like to build things that actually solve problems.</p>
-  </div>
-  <div class="cards">
-    <div class="card reveal" data-magnetic><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6L2 12l6 6M16 6l6 6-6 6"/></svg></div><h3>Full-Stack Development</h3><p>React front-ends, Node.js back-ends and SQL Server databases — complete, responsive web apps built end to end.</p></div>
-    <div class="card reveal" data-magnetic><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3 3 3 0 0 0-3 3 3 3 0 0 0 0 6 3 3 0 0 0 3 3 3 3 0 0 0 6 0 3 3 0 0 0 3-3 3 3 0 0 0 0-6 3 3 0 0 0-3-3 3 3 0 0 0-3-3z"/><path d="M9 13h.01M15 13h.01"/></svg></div><h3>AI &amp; Machine Learning</h3><p>Training AI models in Python — from fraud detection to game-playing agents using Minimax and ML pipelines.</p></div>
-    <div class="card reveal" data-magnetic><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>Cybersecurity</h3><p>Threat-intelligence systems and security thinking — recognised as SOFTEC's Best Security Officer.</p></div>
-    <div class="card reveal" data-magnetic><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div><h3>Data Analysis</h3><p>Turning raw data into insight with NumPy, Pandas &amp; Matplotlib, plus reporting from real financial-risk work.</p></div>
-  </div>
-  <div class="stats reveal">
-    <div class="stat"><span class="num" data-count="8" data-suffix="+">0</span><span class="lbl">Projects Built</span></div>
-    <div class="stat"><span class="num" data-count="3.5" data-suffix=" yrs">0</span><span class="lbl">Teaching Experience</span></div>
-    <div class="stat"><span class="num" data-count="4" data-suffix="+">0</span><span class="lbl">Roles &amp; Internships</span></div>
-    <div class="stat"><span class="num" data-count="11" data-suffix="+">0</span><span class="lbl">Technologies</span></div>
-  </div>
-</section>
-
 <section class="section wrap" id="projects" style="padding-top:0">
   <div class="head reveal">
-    <span class="eyebrow">// 02 — selected work</span>
+    <span class="eyebrow">// 04 — selected work</span>
     <h2>Projects I've built</h2>
     <p class="muted">A mix of full-stack systems, AI models and low-level engineering — built across coursework, internships and personal exploration.</p>
   </div>
-  <div class="feature reveal">
+  <div class="feature anim">
     <div>
       <span class="tag">Featured · Full-Stack + Security</span>
       <h3>CyberSecurity Threat Intelligence Platform</h3>
@@ -414,65 +522,19 @@ img{max-width:100%;display:block}
     </div>
   </div>
   <div class="pgrid">
-    <div class="proj reveal" data-magnetic><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="8" width="16" height="11" rx="2"/><path d="M12 8V4M8 4h8"/><circle cx="9.5" cy="13" r="1.2"/><circle cx="14.5" cy="13" r="1.2"/><path d="M2 12v3M22 12v3"/></svg></div><h4>AI Automation Workflows</h4><p>AI-powered automations that handle data, documentation and repetitive tasks using LLMs and prompt engineering.</p><p class="meta">Python · LLMs · Prompt Engineering · Automation</p></div>
-    <div class="proj reveal" data-magnetic><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg></div><h4>Credit Card Fraud Detection</h4><p>An ML system that flags fraudulent transactions, trained on real-world patterns.</p><p class="meta">Python · Machine Learning · AI training</p></div>
-    <div class="proj reveal" data-magnetic><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h.01M15 15h.01M9 15h.01M15 9h.01"/></svg></div><h4>Tic-Tac-Toe AI Robot</h4><p>An unbeatable opponent powered by the Minimax algorithm and AI logic.</p><p class="meta">Python · Minimax · AI training</p></div>
-    <div class="proj reveal" data-magnetic><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 13l3-3 3 2 4-5"/></svg></div><h4>Software Design Analysis</h4><p>Data analysis and visualisation project applying core SDA principles.</p><p class="meta">Python · NumPy · Pandas · Matplotlib</p></div>
-    <div class="proj reveal" data-magnetic><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M8 8l4 4-4 4M14 16h2"/></svg></div><h4>Maze Runner</h4><p>A maze-navigation game built with C++ and the SFML graphics library.</p><p class="meta">C++ · SFML · Visual Studio</p></div>
-    <div class="proj reveal" data-magnetic><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="9" r="3"/><circle cx="16" cy="15" r="2"/><path d="M12 4v3M5 18h14"/></svg></div><h4>Typing Bubbles</h4><p>A typing game written in pure Assembly — low-level engineering for speed.</p><p class="meta">Assembly · Notepad++</p></div>
-    <div class="proj reveal" data-magnetic><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div><h4>Tetris</h4><p>The classic block-stacker rebuilt from scratch with C++ and SFML.</p><p class="meta">C++ · SFML · VS Code</p></div>
-  </div>
-</section>
-
-<section class="section wrap" id="education" style="padding-top:0">
-  <div class="head reveal" style="margin-inline:auto;text-align:center">
-    <span class="eyebrow" style="justify-content:center">// 03 — education</span>
-    <h2>Education</h2>
-    <p class="muted">My academic path — from school to a Computer Science degree at FAST-NUCES.</p>
-  </div>
-  <div class="edu-grid">
-    <div class="edu-card reveal">
-      <div class="edu-top">
-        <div class="edu-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 9l9-4 9 4-9 4-9-4z"/><path d="M7 11.5V16c0 1 2.5 2.2 5 2.2s5-1.2 5-2.2v-4.5"/><path d="M21 9.2V14"/></svg></div>
-        <span class="edu-badge now">In Progress</span>
-      </div>
-      <h4>BS Computer Science</h4>
-      <p class="inst">FAST-NUCES, Lahore</p>
-      <p class="yr">2024 — 2028</p>
-      <div class="subj"><span>Full-Stack</span><span>AI / ML</span><span>Cybersecurity</span><span>DSA</span></div>
-      <div class="edu-prog"><div class="bar" data-w="48"></div></div>
-      <div class="edu-foot"><span>Bachelor's degree</span><span>~48%</span></div>
-    </div>
-    <div class="edu-card reveal">
-      <div class="edu-top">
-        <div class="edu-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="9.5" ry="4"/><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(120 12 12)"/></svg></div>
-        <span class="edu-badge">Completed</span>
-      </div>
-      <h4>Intermediate — Pre-Engineering</h4>
-      <p class="inst">KIPS College</p>
-      <p class="yr">2022 — 2024</p>
-      <div class="subj"><span>Physics</span><span>Chemistry</span><span>Maths</span></div>
-      <div class="edu-prog"><div class="bar" data-w="100"></div></div>
-      <div class="edu-foot"><span>FSc · Pre-Engineering</span><span>Completed</span></div>
-    </div>
-    <div class="edu-card reveal">
-      <div class="edu-top">
-        <div class="edu-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 4h11a2 2 0 0 1 2 2v13H7a2 2 0 0 0-2 2z"/><path d="M5 19a2 2 0 0 1 2-2h11"/></svg></div>
-        <span class="edu-badge">Completed</span>
-      </div>
-      <h4>Matriculation — Computer Science</h4>
-      <p class="inst">Matric (Science)</p>
-      <p class="yr">2020 — 2022</p>
-      <div class="subj"><span>Physics</span><span>Chemistry</span><span>Comp. Sci</span><span>Maths</span></div>
-      <div class="edu-prog"><div class="bar" data-w="100"></div></div>
-      <div class="edu-foot"><span>Secondary School</span><span>Completed</span></div>
-    </div>
+    <div class="proj anim" data-magnetic><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="8" width="16" height="11" rx="2"/><path d="M12 8V4M8 4h8"/><circle cx="9.5" cy="13" r="1.2"/><circle cx="14.5" cy="13" r="1.2"/><path d="M2 12v3M22 12v3"/></svg></div><h4>AI Automation Workflows</h4><p>AI-powered automations that handle data, documentation and repetitive tasks using LLMs and prompt engineering.</p><p class="meta">Python · LLMs · Prompt Engineering · Automation</p></div>
+    <div class="proj anim" data-magnetic><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg></div><h4>Credit Card Fraud Detection</h4><p>An ML system that flags fraudulent transactions, trained on real-world patterns.</p><p class="meta">Python · Machine Learning · AI training</p></div>
+    <div class="proj anim" data-magnetic><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h.01M15 15h.01M9 15h.01M15 9h.01"/></svg></div><h4>Tic-Tac-Toe AI Robot</h4><p>An unbeatable opponent powered by the Minimax algorithm and AI logic.</p><p class="meta">Python · Minimax · AI training</p></div>
+    <div class="proj anim" data-magnetic><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 13l3-3 3 2 4-5"/></svg></div><h4>Software Design Analysis</h4><p>Data analysis and visualisation project applying core SDA principles.</p><p class="meta">Python · NumPy · Pandas · Matplotlib</p></div>
+    <div class="proj anim" data-magnetic><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M8 8l4 4-4 4M14 16h2"/></svg></div><h4>Maze Runner</h4><p>A maze-navigation game built with C++ and the SFML graphics library.</p><p class="meta">C++ · SFML · Visual Studio</p></div>
+    <div class="proj anim" data-magnetic><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="9" r="3"/><circle cx="16" cy="15" r="2"/><path d="M12 4v3M5 18h14"/></svg></div><h4>Typing Bubbles</h4><p>A typing game written in pure Assembly — low-level engineering for speed.</p><p class="meta">Assembly · Notepad++</p></div>
+    <div class="proj anim" data-magnetic><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div><h4>Tetris</h4><p>The classic block-stacker rebuilt from scratch with C++ and SFML.</p><p class="meta">C++ · SFML · VS Code</p></div>
   </div>
 </section>
 
 <section class="section wrap" id="experience" style="padding-top:0">
   <div class="head reveal" style="margin-inline:auto;text-align:center">
-    <span class="eyebrow" style="justify-content:center">// 04 — the journey</span>
+    <span class="eyebrow" style="justify-content:center">// 05 — the journey</span>
     <h2>Experience</h2>
     <p class="muted">From financial risk to HR support and frontend development — a path built on adaptability.</p>
   </div>
@@ -543,7 +605,7 @@ img{max-width:100%;display:block}
         <a href="mailto:umairamjad2510@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg></a>
       </div>
     </div>
-    <div><h5>Navigate</h5><ul><li><a href="#about">About</a></li><li><a href="#skills">Skills</a></li><li><a href="#projects">Projects</a></li><li><a href="#education">Education</a></li></ul></div>
+    <div><h5>Navigate</h5><ul><li><a href="#about">About</a></li><li><a href="#education">Education</a></li><li><a href="#skills">Skills</a></li><li><a href="#projects">Projects</a></li></ul></div>
     <div><h5>Skills</h5><ul><li><a href="#about">Full-Stack Dev</a></li><li><a href="#about">AI &amp; ML</a></li><li><a href="#about">Cybersecurity</a></li><li><a href="#about">Data Analysis</a></li></ul></div>
     <div><h5>Education</h5><ul><li><a href="#education">BS Computer Science</a></li><li><a href="#education">FAST-NUCES Lahore</a></li><li><a href="#education">2024 — 2028</a></li></ul></div>
   </div>
@@ -568,12 +630,12 @@ img{max-width:100%;display:block}
   document.addEventListener("DOMContentLoaded", init);
 
   function init(){
-    setupNav(); setupMobileMenu(); setupReveals();
+    setupNav(); setupMobileMenu(); setupReveals(); setupCardAnims();
     setupCounters(); setupRoleTyping(); setupPortalSparks();
     setupEduProgress();
     buildEq(); startViz();
-    setupSound();
-    if(finePointer && !reduce) setupCursor();
+    setupSound(); setupEnterGate();
+    if(finePointer && !reduce){ setupCursor(); setupTilt(); }
     if(window.gsap) setupGsap();
   }
 
@@ -783,9 +845,60 @@ img{max-width:100%;display:block}
     soundBtn=document.getElementById("soundToggle");
     if(!soundBtn) return;
     soundBtn.addEventListener("click", function(){ if(soundOn) stopSound(); else startSound(); });
-    // arm on load — will play on first interaction
-    setBtnState(true);
-    startSound();
+    setBtnState(true);   // shows as "on"; music actually begins when the visitor clicks Enter
+  }
+  function setupEnterGate(){
+    var gate=document.getElementById("enterGate");
+    if(!gate) return;
+    var docEl=document.documentElement;
+    docEl.classList.add("gate-open");
+    var done=false;
+    function closeGate(withSound){
+      if(done) return; done=true;
+      gate.classList.add("gate-closing");
+      docEl.classList.remove("gate-open");
+      setTimeout(function(){ gate.style.display="none"; }, 760);
+      if(withSound){ startSound(); } else { setBtnState(false); }
+    }
+    var e1=document.getElementById("gateEnter");
+    var e2=document.getElementById("gateQuiet");
+    if(e1) e1.addEventListener("click", function(){ closeGate(true); });
+    if(e2) e2.addEventListener("click", function(){ closeGate(false); });
+  }
+  function setupCardAnims(){
+    var els=document.querySelectorAll(".anim");
+    if(!els.length) return;
+    if(!("IntersectionObserver" in window) || reduce){
+      for(var i=0;i<els.length;i++){ els[i].classList.add("in"); }
+      return;
+    }
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add("in"); }
+        else { e.target.classList.remove("in"); e.target.style.transform=""; }
+      });
+    }, {threshold:.16, rootMargin:"0px 0px -7% 0px"});
+    for(var j=0;j<els.length;j++){ io.observe(els[j]); }
+  }
+  var TILT_BASE="opacity .7s ease, filter .7s ease, clip-path .85s cubic-bezier(.22,1,.36,1)";
+  function setupTilt(){
+    var cards=document.querySelectorAll(".card, .proj, .edu-card");
+    for(var i=0;i<cards.length;i++){ bindTilt(cards[i]); }
+  }
+  function bindTilt(card){
+    card.addEventListener("mouseenter", function(){ card.style.transition=TILT_BASE+", transform .07s linear"; });
+    card.addEventListener("mousemove", function(e){
+      var r=card.getBoundingClientRect();
+      var px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+      var rx=(py-0.5)*-9, ry=(px-0.5)*11;
+      card.style.transform="perspective(900px) rotateX("+rx.toFixed(2)+"deg) rotateY("+ry.toFixed(2)+"deg) translateY(-6px)";
+      card.style.setProperty("--mx",(px*100).toFixed(1)+"%");
+      card.style.setProperty("--my",(py*100).toFixed(1)+"%");
+    });
+    card.addEventListener("mouseleave", function(){
+      card.style.transition=TILT_BASE+", transform .5s cubic-bezier(.22,1,.36,1)";
+      card.style.transform="";
+    });
   }
   function setBtnState(on){
     soundOn=on;
