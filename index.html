@@ -281,7 +281,7 @@ img{max-width:100%;display:block}
 .card:hover::after,.proj:hover::after,.edu-card:hover::after{opacity:1}
 .card>*,.proj>*,.edu-card>*{position:relative;z-index:2}
 /* ---- boot / curtain intro (click to enter; reveals the page) ---- */
-html.gate-open,html.gate-open body{overflow:hidden}
+html.gate-open,html.gate-open body,html.modal-open,html.modal-open body{overflow:hidden}
 .boot{position:fixed;inset:0;z-index:3000;display:none;overflow:hidden}
 html.js .boot{display:block}
 .boot .curtain{position:absolute;left:0;width:100%;height:50.6%;background:linear-gradient(180deg,#0b0a1c,#070713);z-index:1;transition:transform 1s cubic-bezier(.76,0,.24,1)}
@@ -322,6 +322,52 @@ html.js .boot{display:block}
   .edu-prog .bar{transition:none}
   .boot .curtain,.boot-center{transition:none}
 }
+/* ---- resume modal ---- */
+.resume-modal{position:fixed;inset:0;z-index:2500;display:none;align-items:center;justify-content:center;padding:24px}
+.resume-modal.open{display:flex}
+.rm-backdrop{position:absolute;inset:0;background:rgba(4,4,12,.74);backdrop-filter:blur(8px)}
+.rm-dialog{position:relative;z-index:2;width:min(880px,100%);max-height:90vh;display:flex;flex-direction:column;border-radius:20px;overflow:hidden;background:var(--void-2);border:1px solid var(--line);box-shadow:0 30px 90px rgba(0,0,0,.6);animation:rmIn .42s cubic-bezier(.22,1,.36,1)}
+.rm-dialog::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad);z-index:5}
+@keyframes rmIn{from{opacity:0;transform:translateY(26px) scale(.97)}to{opacity:1;transform:none}}
+.rm-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 20px;border-bottom:1px solid var(--line);background:rgba(20,18,42,.6);flex-shrink:0}
+.rm-title{font-family:"JetBrains Mono";font-size:12.5px;letter-spacing:.16em;color:var(--violet-bright);text-transform:uppercase}
+.rm-actions{display:flex;align-items:center;gap:10px}
+.rm-dl{padding:9px 16px;font-size:13px}
+.rm-dl .ico{width:15px;height:15px}
+.rm-close{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--mist);font-size:22px;line-height:1;cursor:pointer;display:grid;place-items:center;transition:all .2s;flex-shrink:0}
+.rm-close:hover{color:#fff;border-color:var(--magenta);background:rgba(224,86,253,.12)}
+.rm-scroll{overflow-y:auto;padding:30px;-webkit-overflow-scrolling:touch}
+.resume{color:var(--mist);font-size:.92rem;line-height:1.6}
+.resume .r-head{border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:6px}
+.resume .r-name{font-family:"Space Grotesk";font-weight:700;font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.05}
+.resume .r-role{font-family:"JetBrains Mono";font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin:7px 0 13px}
+.resume .r-contact{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.82rem;color:var(--mist)}
+.resume .r-contact a{color:var(--violet-bright)}
+.resume .r-contact a:hover{color:#fff}
+.resume h3.r-sec{font-family:"JetBrains Mono";font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--violet-bright);margin:24px 0 13px;display:flex;align-items:center;gap:10px}
+.resume h3.r-sec::after{content:"";flex:1;height:1px;background:var(--line)}
+.resume p{margin:0 0 4px}
+.resume .r-two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:560px){.resume .r-two{grid-template-columns:1fr;gap:8px}}
+.resume .r-chip-wrap{display:flex;flex-wrap:wrap;gap:7px}
+.resume .r-chip{font-family:"JetBrains Mono";font-size:10.5px;padding:5px 10px;border-radius:7px;background:rgba(139,92,246,.1);border:1px solid var(--line);color:var(--mist)}
+.resume .r-job{margin-bottom:15px}
+.resume .r-job .r-jt{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+.resume .r-job h4{font-family:"Space Grotesk";font-weight:600;font-size:1rem;color:#fff}
+.resume .r-job .r-when{font-family:"JetBrains Mono";font-size:11px;color:var(--cyan);white-space:nowrap}
+.resume .r-job .r-org{color:var(--violet-bright);font-size:.85rem;margin:1px 0 6px}
+.resume .r-job ul{list-style:none;padding:0;margin:0}
+.resume .r-job li{position:relative;padding-left:16px;margin-bottom:3px;font-size:.86rem}
+.resume .r-job li::before{content:"\203A";position:absolute;left:0;color:var(--magenta)}
+.resume .r-proj{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.resume .r-proj b{color:#fff;font-weight:600;font-size:.9rem}
+.resume .r-proj .r-stack{font-family:"JetBrains Mono";font-size:10.5px;color:var(--mist-dim)}
+.resume .r-edu{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:5px 0}
+.resume .r-edu .r-deg{color:#fff}
+.resume .r-edu .r-inst{color:var(--violet-bright);font-size:.85rem}
+.resume .r-edu .r-yr{font-family:"JetBrains Mono";font-size:11px;color:var(--mist-dim);white-space:nowrap}
+@media(max-width:600px){.rm-scroll{padding:20px 15px}.rm-bar{padding:12px 14px}.rm-dl{padding:8px 12px;font-size:12px}}
+@media(max-width:480px){.rm-title{display:none}}
 :focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
 </style>
 <script>document.documentElement.classList.add("js");</script>
@@ -396,6 +442,7 @@ html.js .boot{display:block}
       <p class="lead">A computer scientist focused on full-stack development, AI &amp; machine learning, and cybersecurity. I turn ideas into working software &mdash; from React front-ends to Python AI models.</p>
       <div class="hero-cta">
         <a class="btn btn-primary" href="#projects">View projects <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <button class="btn btn-ghost" id="openResume" data-magnetic>View r&eacute;sum&eacute; <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h7M8 17h5"/></svg></button>
         <a class="btn btn-ghost" href="#contact">Get in touch</a>
       </div>
     </div>
@@ -615,6 +662,73 @@ html.js .boot{display:block}
   <span class="lbl">Ambient music</span>
 </button>
 
+<div class="resume-modal" id="resumeModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="R&eacute;sum&eacute; — Muhammad Umair Amjad">
+  <div class="rm-backdrop" data-rm-close></div>
+  <div class="rm-dialog">
+    <div class="rm-bar">
+      <span class="rm-title">R&eacute;sum&eacute;</span>
+      <div class="rm-actions">
+        <a class="btn btn-primary rm-dl" href="UmairAmjad_Resume.pdf" download="Muhammad_Umair_Amjad_Resume.pdf">Download <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v12M7 11l5 5 5-5M5 21h14"/></svg></a>
+        <button class="rm-close" id="rmClose" aria-label="Close r&eacute;sum&eacute;">&times;</button>
+      </div>
+    </div>
+    <div class="rm-scroll">
+      <div class="resume">
+        <div class="r-head">
+          <div class="r-name grad-text">Muhammad Umair Amjad</div>
+          <div class="r-role">Computer Scientist</div>
+          <div class="r-contact">
+            <span>Mansoorah, Lahore</span>
+            <a href="mailto:umairamjad2510@gmail.com">umairamjad2510@gmail.com</a>
+            <a href="tel:+923039426734">+92 303 9426734</a>
+            <a href="mailto:l240711@lhr.nu.edu.pk">l240711@lhr.nu.edu.pk</a>
+            <a href="https://github.com/MuhammadUmairAmjad" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+
+        <h3 class="r-sec">Summary</h3>
+        <p>Results-driven BS Computer Science student at FAST-NUCES Lahore with expertise in full-stack development, data analysis and AI integration. Proficient in C, C++ and Python. Experienced in freelancing on Upwork and internships in BPO and financial-risk management. Strong communication and presentation skills, supported by 3+ years of teaching experience. Adaptable, quick learner, and ready to contribute immediately &mdash; based in Lahore.</p>
+
+        <div class="r-two">
+          <div>
+            <h3 class="r-sec">Professional Skills</h3>
+            <div class="r-chip-wrap"><span class="r-chip">Project &amp; Client Management</span><span class="r-chip">Mentorship</span><span class="r-chip">Communication</span><span class="r-chip">Presentation</span><span class="r-chip">Reporting</span><span class="r-chip">Problem Solving</span><span class="r-chip">Adaptability</span><span class="r-chip">Team Collaboration</span></div>
+          </div>
+          <div>
+            <h3 class="r-sec">Technical Skills</h3>
+            <div class="r-chip-wrap"><span class="r-chip">C</span><span class="r-chip">C++</span><span class="r-chip">Python</span><span class="r-chip">Assembly</span><span class="r-chip">HTML</span><span class="r-chip">CSS</span><span class="r-chip">Java</span><span class="r-chip">React</span><span class="r-chip">Node.js</span><span class="r-chip">SQL Server</span><span class="r-chip">Git / GitHub</span><span class="r-chip">AI Model Training</span><span class="r-chip">Prompt Engineering</span><span class="r-chip">Machine Learning</span><span class="r-chip">Cybersecurity</span></div>
+          </div>
+        </div>
+
+        <h3 class="r-sec">Professional Experience</h3>
+        <div class="r-job"><div class="r-jt"><h4>Freelancer &mdash; Data &amp; Documentation</h4><span class="r-when">2026 &mdash; Present</span></div><div class="r-org">Upwork (Active)</div><ul><li>Delivering data analysis, documentation and admin-support services to clients.</li><li>Maintaining an active profile with a consistent project-completion record.</li></ul></div>
+        <div class="r-job"><div class="r-jt"><h4>Risk Manager</h4><span class="r-when">2024 &mdash; 2025</span></div><div class="r-org">CapitalFX, Lahore</div><ul><li>Monitored and assessed financial-risk exposure across trading accounts.</li><li>Prepared risk reports and data-driven documentation for management review.</li></ul></div>
+        <div class="r-job"><div class="r-jt"><h4>Junior Frontend Developer &mdash; Internship</h4><span class="r-when">2024 &mdash; 2025</span></div><div class="r-org">SOFTEC, FAST-NUCES Lahore</div><ul><li>Built responsive interfaces using HTML, CSS and JavaScript; boosted engagement by 35%.</li></ul></div>
+        <div class="r-job"><div class="r-jt"><h4>Assistant HR</h4><span class="r-when">4 months</span></div><div class="r-org">CollabBPO, Lahore</div><ul><li>Assisted the HR team with recruitment coordination, candidate documentation and day-to-day administrative operations.</li></ul></div>
+        <div class="r-job"><div class="r-jt"><h4>Subject Teacher &mdash; Maths, Physics &amp; Chemistry</h4><span class="r-when">2023 &mdash; Present</span></div><div class="r-org">Private</div><ul><li>3.5 years of student-centered, adaptive lesson delivery.</li></ul></div>
+
+        <h3 class="r-sec">Projects</h3>
+        <div class="r-proj"><b>CyberSecurity Threat Intelligence Platform</b><span class="r-stack">React &middot; Node.js &middot; SQL Server</span></div>
+        <div class="r-proj"><b>Credit Card Fraud Detection System</b><span class="r-stack">Python &middot; Machine Learning &middot; AI</span></div>
+        <div class="r-proj"><b>Tic-Tac-Toe with Integrated AI Robot</b><span class="r-stack">Python &middot; Minimax &middot; AI</span></div>
+        <div class="r-proj"><b>Software &amp; Design Analysis Project</b><span class="r-stack">Python &middot; NumPy &middot; Pandas &middot; Matplotlib</span></div>
+        <div class="r-proj"><b>Maze Runner</b><span class="r-stack">C++ &middot; SFML &middot; Visual Studio</span></div>
+        <div class="r-proj"><b>Typing Bubbles</b><span class="r-stack">Assembly &middot; Notepad++</span></div>
+        <div class="r-proj"><b>Tetris Game</b><span class="r-stack">C++ &middot; SFML &middot; VS Code</span></div>
+
+        <h3 class="r-sec">Education</h3>
+        <div class="r-edu"><span><span class="r-deg">BS Computer Science</span> &nbsp;<span class="r-inst">FAST-NUCES Lahore</span></span><span class="r-yr">2024 &mdash; 2028</span></div>
+        <div class="r-edu"><span><span class="r-deg">Intermediate &mdash; Pre-Engineering</span> &nbsp;<span class="r-inst">KIPS College</span></span><span class="r-yr">2022 &mdash; 2024</span></div>
+        <div class="r-edu"><span><span class="r-deg">Matriculation &mdash; Computer Science</span></span><span class="r-yr">2020 &mdash; 2022</span></div>
+
+        <h3 class="r-sec">Additional Information</h3>
+        <p><b style="color:#fff">Languages:</b> English, Urdu</p>
+        <p><b style="color:#fff">Certifications:</b> HP &mdash; Effective Leadership &middot; Presentation Certificate &middot; Cybersecurity Certificate &middot; SOFTEC &mdash; Best Security Officer</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 (function(){
   "use strict";
@@ -631,7 +745,7 @@ html.js .boot{display:block}
     setupCounters(); setupRoleTyping(); setupPortalSparks();
     setupEduProgress();
     buildEq(); startViz();
-    setupSound(); setupEnterGate();
+    setupSound(); setupEnterGate(); setupResume();
     if(finePointer && !reduce){ setupCursor(); setupTilt(); }
     if(window.gsap) setupGsap();
   }
@@ -859,6 +973,19 @@ html.js .boot{display:block}
     }
     var b=document.getElementById("gateEnter");
     if(b) b.addEventListener("click", openCurtains);
+  }
+  function setupResume(){
+    var modal=document.getElementById("resumeModal");
+    var openBtn=document.getElementById("openResume");
+    if(!modal||!openBtn) return;
+    var closeBtn=document.getElementById("rmClose");
+    var docEl=document.documentElement;
+    function openM(){ modal.classList.add("open"); modal.setAttribute("aria-hidden","false"); docEl.classList.add("modal-open"); }
+    function closeM(){ modal.classList.remove("open"); modal.setAttribute("aria-hidden","true"); docEl.classList.remove("modal-open"); }
+    openBtn.addEventListener("click", openM);
+    if(closeBtn) closeBtn.addEventListener("click", closeM);
+    modal.addEventListener("click", function(e){ if(e.target.hasAttribute("data-rm-close")) closeM(); });
+    document.addEventListener("keydown", function(e){ if(e.key==="Escape" && modal.classList.contains("open")) closeM(); });
   }
   function setupCardAnims(){
     var els=document.querySelectorAll(".anim");
